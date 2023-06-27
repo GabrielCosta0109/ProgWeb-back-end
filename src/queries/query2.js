@@ -14,7 +14,15 @@ async function run() {
       await client.connect();
       // Send a ping to confirm a successful connection
       const db = client.db("ProgWeb").collection("Dados2022")
-      const findFilter5 = await db.countDocuments(noEspcVac)
+      
+      const findFilter5 = await db.find(noEspcVac).toArray((err, documents) => {
+          if (err) {
+            console.error('Erro ao buscar documentos:', err);
+            client.close();
+            return;
+          }
+      })
+
       const findFilter2 = await db.countDocuments(noVacOutrosSrag)
       const findFilter3 = await db.countDocuments(noVacCovSrag)
       const findFilter1 = await db.countDocuments(vac)
@@ -22,7 +30,7 @@ async function run() {
       const findAll = await db.countDocuments({})
       // const toArray = await findAll.toArray()
       
-      console.log(findFilter5, findFilter1, findFilter2, findFilter3,findFilter4, findAll)
+      console.log(findFilter5.length, findFilter1, findFilter2, findFilter3,findFilter4, findAll)
       console.log("Pinged your deployment. You successfully connected to MongoDB!");
   
     } finally {
