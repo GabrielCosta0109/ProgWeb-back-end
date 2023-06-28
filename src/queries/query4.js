@@ -1,6 +1,6 @@
 const client = require('../client').default
 
-// FILTROS DA QUARTA CONSULTA
+// FILTROS DA QUARTA CONSULTA.
 
 const pessMaior50 = { NU_IDADE_N: { $gte: 50 } }
 const evoMorte = { EVOLUCAO: 2 }

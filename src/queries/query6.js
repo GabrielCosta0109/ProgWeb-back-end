@@ -1,6 +1,6 @@
 const client = require('../client').default
 
-// FILTROS DA SEXTA CONSULTA
+// FILTROS DA SEXTA CONSULTA.
 
 const pessMenor20 = { NU_IDADE_N: { $lte: 20 } }
 const pessMaior20 = { NU_IDADE_N: { $gt: 20 } }

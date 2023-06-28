@@ -1,6 +1,6 @@
 const client = require('../client').default
 
-// FILTROS DA OITAVA CONSULTA
+// FILTROS DA OITAVA CONSULTA.
 
 const srgaCovid = { CLASSI_FIN: 5 }
 const supUtiInva = { SUPORT_VEN: 1 }
