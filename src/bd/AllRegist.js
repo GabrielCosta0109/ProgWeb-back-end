@@ -7,7 +7,7 @@ async function run() {
 
       const db = client.db("ProgWeb").collection("Dados2022")
       
-      const All = await db.find({}).toArray((err, documents) => {
+      const All = await db.find({ SG_UF : 'SE'}).toArray((err, documents) => {
         if (err) {
             console.error('Erro ao buscar documentos:', err);
             client.close();

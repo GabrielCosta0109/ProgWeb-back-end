@@ -1,37 +1,26 @@
-const client = require('../client').default
+const client = require('../client')
 
 // FILTROS DA SETIMA CONSULTA.
 
-const interUtiSim = { UTI: 1 }
-const supUtiInva = { SUPORT_VEN: 1 }
-const supUtiNaoInva = { SUPORT_VEN: 2 }
+const supUtiInvaMelhora = {$and: [{ UTI: 1 }, {EVOLUCAO:1}, { SUPORT_VEN: 1 }]}
+const supUtiNaoInvaMelhora = {$and: [{ UTI: 1 },{EVOLUCAO:1},{ SUPORT_VEN:2}]}
 
-async function run() {
+async function Query7() {
 
     try {
-        // Connect the client to the server	(optional starting in v4.7)
-        await client.connect();
-        const findFilter5 = await db.find(interUtiSim).toArray((err, documents) => {
-            if (err) {
-                console.error('Erro ao buscar documentos:', err);
-                client.close();
-                return;
-            }
-        })
-        // Send a ping to confirm a successful connection
-        const db = client.db("ProgWeb").collection("Dados2022")
-        const findFilter1 = await db.countDocuments(interUtiSim)
-        const findFilter2 = await db.countDocuments(supUtiInva)
-        const findFilter3 = await db.countDocuments(supUtiNaoInva)
-        // const toArray = await findAll.toArray()
+      await client.connect();
+      const db = client.db("ProgWeb").collection("Dados2022")
 
-        console.log(findFilter1, findFilter2, findFilter3)
-        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+      const findFilter5 = await db.countDocuments(supUtiInvaMelhora)
+      const findAll = await db.countDocuments(supUtiNaoInvaMelhora)
 
+      return (
+        [findFilter5, findAll]
+      )
+  
     } finally {
-        // Ensures that the client will close when you finish/error
-        await client.close();
+      await client.close();
     }
-}
-
-run()
+  }
+  
+module.exports = Query7
