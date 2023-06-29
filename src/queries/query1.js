@@ -1,6 +1,6 @@
 const client = require('../client')
 
-// FILTROS DA PRIMEIRA CONSULTA.
+// FILTROS DA PRIMEIRA CONSULTA
 
 const pesContatoAni = {$and: [{AVE_SUINO:1}]}
 

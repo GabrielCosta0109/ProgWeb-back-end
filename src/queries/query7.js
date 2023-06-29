@@ -1,6 +1,6 @@
 const client = require('../client')
 
-// FILTROS DA SETIMA CONSULTA.
+// FILTROS DA SETIMA CONSULTA
 
 const supUtiInvaMelhora = {$and: [{ UTI: 1 }, {EVOLUCAO:1}, { SUPORT_VEN: 1 }]}
 const supUtiNaoInvaMelhora = {$and: [{ UTI: 1 },{EVOLUCAO:1},{ SUPORT_VEN:2}]}

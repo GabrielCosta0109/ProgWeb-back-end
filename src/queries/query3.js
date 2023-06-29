@@ -1,6 +1,6 @@
 const client = require('../client')
 
-// FILTROS DA TERCEIRA CONSULTA.
+// FILTROS DA TERCEIRA CONSULTA
 
 const pessVacCovSimSrag= {$and: [{ VACINA_COV: 1}, {CLASSI_FIN: {$in :[1,2,3,4] }}]}
 

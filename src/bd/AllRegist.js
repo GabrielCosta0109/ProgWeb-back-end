@@ -2,8 +2,8 @@ const client = require('../client')
 
 async function run() {
 
-    try {
-      await client.connect();
+  try {
+    await client.connect();
 
       const db = client.db("ProgWeb").collection("Dados2022")
       
@@ -18,11 +18,11 @@ async function run() {
         }
       }) 
 
-      return All
+    return All
 
-    } finally {
-      await client.close();
-    }
+  } finally {
+    await client.close();
+  }
 }
 
 module.exports = run

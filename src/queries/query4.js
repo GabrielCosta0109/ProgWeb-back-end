@@ -1,6 +1,6 @@
 const client = require('../client')
 
-// FILTROS DA QUARTA CONSULTA.
+// FILTROS DA QUARTA CONSULTA
 
 const pessMaior50Obito = { $and: [{NU_IDADE_N: {$gte: 50}}, {EVOLUCAO: 2}]}
 const pessMenor50Obito = { $and: [{NU_IDADE_N: {$lte: 50}}, {EVOLUCAO: 2}]}

@@ -1,6 +1,6 @@
 const client = require('../client')
 
-// FILTROS DA OITAVA CONSULTA.
+// FILTROS DA OITAVA CONSULTA
 
 const srgaCovid = {$and:[{SUPORT_VEN:1},{CLASSI_FIN:5}]}
 const sragOutrosTip = {$and:[{SUPORT_VEN:1},{CLASSI_FIN:{$in :[1,2,3,4] }}]}
