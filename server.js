@@ -1,5 +1,5 @@
 const express = require('express');
-const run = require('./src/bd/AllRegist')
+const run = require('./src/bd/testeQuery')
 const app = express();
 const port = 3000;
 
@@ -8,9 +8,9 @@ app.use(express.json());
 
 // Rota para obter todos os livros
 app.get('/Registers', (req, res) => {
-    run()
-    .then(All =>
-        res.json(All)    
+  run()
+    .then(findFilter5 =>
+      res.json(findFilter5)
     )
 });
 

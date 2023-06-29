@@ -1,6 +1,6 @@
 const client = require('../client')
 
-// FILTROS DA TERCEIRA CONSULTA.
+// FILTROS DA TERCEIRA CONSULTA
 
 const vacSim = { VACINA_COV: 1 }
 const tipoSragSemCov = { CLASSI_FIN: { $in: [1, 2, 3, 4] } }

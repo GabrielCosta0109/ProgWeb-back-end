@@ -1,6 +1,6 @@
 const client = require('../client')
 
-// FILTROS DA SETIMA CONSULTA.
+// FILTROS DA SETIMA CONSULTA
 
 const interUtiSim = { UTI: 1 }
 const supUtiInva = { SUPORT_VEN: 1 }

@@ -1,6 +1,6 @@
 const client = require('../client')
 
-// FILTROS DA NONA CONSULTA.
+// FILTROS DA NONA CONSULTA
 
 const nosocomialSim = {NOSOCOMIAL:1}
 

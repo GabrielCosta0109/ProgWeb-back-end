@@ -1,6 +1,6 @@
 const client = require('../client')
 
-// FILTROS DA DECIMA CONSULTA.
+// FILTROS DA DECIMA CONSULTA
 
 const diabetesSim = {DIABETES:1}
 const interUtiSim = { UTI: 1 }
