@@ -1,4 +1,4 @@
-const mongoUrl = require('./bdPassword/mongoUrl')
+const mongoUrl = require('./bdPassword')
 
 const { MongoClient, ServerApiVersion } = require('mongodb')
 
