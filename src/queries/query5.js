@@ -1,5 +1,4 @@
-const client = require('../client').default
-
+const client = require('../client')
 // FILTROS DA QUINTA CONSULTA.
 
 const pessMenor10 = {NU_IDADE_N:{$lte:10}}
