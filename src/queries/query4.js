@@ -9,12 +9,11 @@ const pessMenor50Obito = { $and: [{NU_IDADE_N: {$lte: 50}}, {EVOLUCAO: 2}]}
 async function Query4() {
 
     try {
-        // Connect the client to the server	(optional starting in v4.7)
         await client.connect();
         const db = client.db("ProgWeb").collection("Dados2022")
 
-        const findFilter1 = await db.countDocuments(pessMaior50Obito)
-        const findFilter2 = await db.countDocuments(pessMenor50Obito)
+        const findFilter1 = await db.find(pessMaior50Obito).project({ SG_UF_NOT: 1, CS_SEXO: 1, _id:0 }).toArray()
+        const findFilter2 = await db.find(pessMenor50Obito).project({ SG_UF_NOT: 1, CS_SEXO: 1, _id:0 }).toArray()
         const findFilter3 = await db.countDocuments({})
 
         return(
@@ -22,7 +21,6 @@ async function Query4() {
         )
 
     } finally {
-        // Ensures that the client will close when you finish/error
         await client.close();
     }
 }

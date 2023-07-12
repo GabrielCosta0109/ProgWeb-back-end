@@ -11,8 +11,8 @@ async function Query2() {
     await client.connect();
     const db = client.db("ProgWeb").collection("Dados2022")
 
-    const findFilter5 = await db.countDocuments(noVacCovid)
-    const findAll = await db.countDocuments(tiposSragSemCov)
+    const findFilter5 = await db.find(noVacCovid).project({ SG_UF_NOT: 1, CS_SEXO: 1, _id:0 }).toArray()
+    const findAll = await db.find(tiposSragSemCov).project({ SG_UF_NOT: 1, CS_SEXO: 1, _id:0 }).toArray()
 
     return (
       [findFilter5, findAll]

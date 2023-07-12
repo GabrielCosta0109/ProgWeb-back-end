@@ -12,8 +12,8 @@ async function Query5() {
     await client.connect();
     const db = client.db("ProgWeb").collection("Dados2022")
 
-    const findFilter5 = await db.countDocuments(menor10Recuperado)
-    const findAll = await db.countDocuments(evoMelhora)
+    const findFilter5 = await db.find(menor10Recuperado).project({ SG_UF_NOT: 1, CS_SEXO: 1, _id:0 }).toArray()
+    const findAll = await db.find(evoMelhora).project({ SG_UF_NOT: 1, CS_SEXO: 1, _id:0 }).toArray()
 
     return (
       [findFilter5, findAll]
