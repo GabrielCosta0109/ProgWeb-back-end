@@ -1,10 +1,5 @@
-import { initializeApp } from "firebase/app";
-import { getAnalytics, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+const admin = require('firebase-admin');
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyDaBcVujVjdJ5GlbJ4pG-sIVPh0S1z_N8Q",
   authDomain: "autenticacaoprogwebsrag.firebaseapp.com",
@@ -15,41 +10,53 @@ const firebaseConfig = {
   measurementId: "G-L42Y9F6J4N"
 };
 
-const auth = firebase.auth();
+admin.initializeApp({
+    credential: admin.credential.cert(firebaseConfig),
+  });
 
-function login(){
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+const auth = admin.auth();
 
-    auth.signInWithEmailandPassord(email, password).then((userCredial) => {
-        const user = userCredintial.user;
-        console.log("Usuário logado:", user.email);
-    })
-    .catch((error) => {
-        console.log("Erro de login:");
-    });
+async function login(email, password){
+    try {
+        const userRecord = await auth.getUserByEmail(email);
+    
+        const authResult = await auth.signInWithEmailAndPassword(email, password);
+        
+        return 200
+    } catch (error) {
+        return 401
+    }
 }
 
-function loginExist(){
-    const email = "novousuario@emial.com";
-    const password = "senha123";
+async function register(email, password){
 
-    auth.createUserWithEmailAndPassword(email, password).then((userCredential) => {
-       const user = userCredential.user;
-       console.log("Usuário registrado:", user.email); 
-    })
-    .catch((error) => {
-        console.log("Ero ao registrar:")
-    });
+    try {
+        await admin.auth().getUserByEmail(email)
+
+        return 400
+    } catch (error) {
+        try {
+          const newUserRecord = await admin.auth().createUser({
+            email,
+            password,
+          })
+    
+          return 201
+        } catch (error) {
+
+          return 400
+        }
+    }
 }
 
-function logout(){
-    auth.singOut().then(() => {
-        console.log("Usuário deslogado.");
-        document.getElementById("user-email").textContent = "";
-    })
-}
+async function logout(token){
+    try {
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+        await admin.auth().revokeRefreshTokens(token);
+        
+        return 200
+    } catch (error) {
+
+        return 400
+    }
+}
