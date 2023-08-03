@@ -11,7 +11,9 @@ const Query8 = require('./src/queries/query8.js')
 const Query9 = require('./src/queries/query9.js')
 const Query10 = require('./src/queries/query10.js')
 
-const login = require('./src/Authentication/loginExistente.js')
+const {login} = require('./src/Authentication/loginExistente.js')
+const {register} = require('./src/Authentication/loginExistente.js')
+const {logout} = require('./src/Authentication/loginExistente.js')
 
 
 const app = express()
