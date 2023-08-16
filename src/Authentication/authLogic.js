@@ -24,12 +24,37 @@ const auth = admin.auth();
 async function login(email, password){
     try {
         const userRecord = await auth.getUserByEmail(email);
-    
-        const authResult = await auth.signInWithEmailAndPassword(email, password);
-        
-        return 200
-    } catch (error) {
-        return 401
+
+        try {
+            const authResult = await auth.signInWithEmailAndPassword(email, password);
+
+            const resObject = {
+                name: "OK",
+                code: 200,
+                message: "Usuário autenticado com sucesso!",
+                token: authResult.user
+            }
+
+            return resObject
+        }
+        catch (error){
+
+            const errorObject = {
+                name: "Error",
+                code: 401,
+                message: "Credenciais inválidas. Senha ou email incorretos."
+            }
+            return errorObject
+        }
+    } 
+    catch (error){
+        const errorObject = {
+            name: "Error",
+            code: 404,
+            message: "Credenciais inválidas. Senha ou email incorretos."
+        }
+
+        return errorObject
     }
 }
 
@@ -38,18 +63,34 @@ async function register(email, password){
     try {
         await auth.getUserByEmail(email)
 
-        return 400
-    } catch (error) {
+        const errorObject = {
+            name: "Error",
+            code: 400,
+            message: "Email já vinculado a um usuário"
+        }
+        return errorObject
+        
+    } 
+    catch (error) {
         try {
-          const newUserRecord = await auth.createUser({
+            const newUserRecord = await auth.createUser({
             email,
             password,
-          })
-    
-          return 201
-        } catch (error) {
+            })
 
-          return 400
+            const sucessObject = {
+            name: "OK",
+            code: 201,
+            message: "Usuário Criado com sucesso!"
+            }
+            return sucessObject
+        } catch (error) {
+            const errorObject = {
+                name: "Error",
+                code: 400,
+                message: "Erro inesperado ao criar usuário, por favor tente novamente."
+            }
+            return errorObject
         }
     }
 }
@@ -59,10 +100,20 @@ async function logout(token){
 
         await auth.revokeRefreshTokens(token);
         
-        return 200
+        const sucessObject = {
+            name: "OK",
+            code: 200,
+            message: "Logout com sucesso!"
+        }
+        return sucessObject
     } catch (error) {
 
-        return 400
+        const errorObject = {
+            name: "Error",
+            code: 400,
+            message: "Erro inesperado ao dar logout, por favor tente novamente."
+        }
+        return errorObject
     }
 }
 

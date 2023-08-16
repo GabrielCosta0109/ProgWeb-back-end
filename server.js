@@ -11,9 +11,9 @@ const Query8 = require('./src/queries/query8.js')
 const Query9 = require('./src/queries/query9.js')
 const Query10 = require('./src/queries/query10.js')
 
-const {login} = require('./src/Authentication/loginExistente.js')
-const {register} = require('./src/Authentication/loginExistente.js')
-const {logout} = require('./src/Authentication/loginExistente.js')
+const {login} = require('./src/Authentication/authLogic.js')
+const {register} = require('./src/Authentication/authLogic.js')
+const {logout} = require('./src/Authentication/authLogic.js')
 
 
 const app = express()
@@ -106,9 +106,10 @@ app.post('/login', async (req, res) => {
   
   login(email, password)
   .then(status => {
-    if(status === 200){
-      res.status(200).json({ message: 'Usuário autenticado com sucesso!', token: authResult.user.toJSON() })
-    } else {
+    if(status.code === 200){
+      res.status(200).json({ message: 'Usuário autenticado com sucesso!', token: status.token.toJSON() })
+    } 
+    else {
       res.status(401).json({ error: 'Credenciais inválidas. Não foi possível autenticar o usuário.' })
     }
   })
@@ -120,9 +121,10 @@ app.post('/register', async (req, res) => {
   
   register(email, password)
   .then(status => {
-    if(status === 201){
-      res.status(201).json({ message: 'Usuário registrado com sucesso!', user: newUserRecord.toJSON() })
-    } else {
+    if(status.code === 201){
+      res.status(201).json({ message: 'Usuário registrado com sucesso!'})
+    } 
+    else {
       res.status(400).json({ error: 'Não foi possível registrar o usuário. Verifique os dados fornecidos.' })
     }
   })
@@ -134,10 +136,10 @@ app.post('/logout', async (req, res) => {
   
   logout(token)
   .then(status => {
-    if(status === 200){
+    if(status.code === 200){
       res.status(200).json({ message: 'Usuário deslogado com sucesso!' })
     } else {
-      res.status(400).json({ error: 'Não foi possível deslogar o usuário. Verifique o token fornecido.' })
+      res.status(400).json({ error: 'Não foi possível deslogar o usuário.' })
     }
   })
   
