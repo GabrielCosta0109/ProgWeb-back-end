@@ -1,4 +1,6 @@
 const express = require('express')
+const bodyParser = require('body-parser');
+const run = require('./src/bd/queryteste.js')
 const Query1 = require('./src/queries/query1.js')
 const Query2 = require('./src/queries/query2.js')
 const Query3 = require('./src/queries/query3.js')
@@ -21,7 +23,7 @@ const app = express()
 const port = 3001
 
 // Middleware para análise do corpo da solicitação no formato JSON
-app.use(express.json())
+app.use(bodyParser.json())
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', 'https://portalweb-srag.vercel.app')
@@ -144,32 +146,6 @@ app.post('/logout', async (req, res) => {
     }
   })
   
-})
-
-app.post('/Map', (req, res) => {
-  const {latitude, longitude} = req.body
-  console.log(latitude, longitude)
-  getMap(latitude, longitude)
-
-  .then(status => {
-    if(status.code === 201){
-      res.status(201).json({ message: status.message})
-    } else {
-      res.status(401).json({ error: status.code, message: status.message })
-    }
-  })
-})
-
-app.get('/Maps', (req, res) => {
-
-  AllMap()
-  .then(status => {
-    if(status.code === 201){
-      res.status(200).json({ message: status.message, data: status.data})
-    } else {
-      res.status(401).json({ error: status.code, message: status.message })
-    }
-  })
 })
 
 // Inicia o servidor
