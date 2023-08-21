@@ -11,15 +11,17 @@ async function getMap(latitude, longitude) {
       latitude: latitude,
       longitude: longitude,
     });
-      return ({
-        'code':201,
-        'message':'Enviado com sucesso!',
-      })
+
+    return ({
+      code:201,
+      message:'Enviado com sucesso!',
+    })
+
   }
   catch {
     return ({
-        'code':401,
-        'message':'Erro, não foi possível criar!',
+        code:401,
+        message:'Erro, não foi possível criar!',
       })
   }
   finally {

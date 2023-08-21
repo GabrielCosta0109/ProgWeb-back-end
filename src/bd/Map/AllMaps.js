@@ -17,16 +17,15 @@ async function AllMap(latitude, longitude) {
                 resolve(documents)
             }
         })
-
         return ({
-            'code': 200,
-            'data': All,
+            code: 200,
+            data: All,
         })
     }
     catch {
         return ({
-            'code': 401,
-            'message': 'Erro, não foi possível encontrar!'
+            code: 401,
+            message: 'Erro, não foi possível encontrar!'
         })
     }
     finally {

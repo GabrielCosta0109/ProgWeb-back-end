@@ -1,5 +1,4 @@
 const express = require('express')
-const bodyParser = require('body-parser');
 const Query1 = require('./src/queries/query1.js')
 const Query2 = require('./src/queries/query2.js')
 const Query3 = require('./src/queries/query3.js')
@@ -13,22 +12,24 @@ const Query10 = require('./src/queries/query10.js')
 
 const getMap = require('./src/bd/Map/saveMap.js')
 const AllMap = require('./src/bd/Map/AllMaps.js')
+const bodyParser = require('body-parser')
 
 
 const app = express()
 const port = 3001
 
 // Middleware para análise do corpo da solicitação no formato JSON
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'https://portalweb-srag.vercel.app')
-  //res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
+  res.setHeader('Access-Control-Allow-Origin', 'https://portalweb-srag.vercel.app', 'http://localhost:3000')
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
   next()
 })
 
-app.use(bodyParser.json()) 
 // Rota para obter todos os livros
 app.get('/Query1', (req, res) => {
     Query1()
@@ -119,7 +120,7 @@ app.get('/Maps', (req, res) => {
   AllMap()
   .then(status => {
     if(status.code === 201){
-      res.status(200).json({ message: status.message, data: status.data})
+      res.status(201).json({ message: status.message, data: status.data})
     } else {
       res.status(401).json({ error: status.code, message: status.message })
     }
