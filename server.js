@@ -152,3 +152,30 @@ app.post('/logout', async (req, res) => {
 app.listen(port, () => {
   console.log(`Servidor rodando em http://localhost:${port}`)
 })
+
+app.post('/Map', (req, res) => {
+  const {latitude, longitude} = req.body
+  console.log(latitude, longitude)
+  getMap(latitude, longitude)
+
+  .then(status => {
+    if(status.code === 201){
+      res.status(201).json({ message: status.message})
+    } else {
+      res.status(401).json({ error: status.code, message: status.message })
+    }
+  })
+})
+
+app.get('/Maps', (req, res) => {
+
+  AllMap()
+  .then(status => {
+    if(status.code === 201){
+      res.status(200).json({ message: status.message, data: status.data})
+    } else {
+      res.status(401).json({ error: status.code, message: status.message })
+    }
+  })
+})
+
