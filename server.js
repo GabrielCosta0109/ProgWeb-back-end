@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'https://portalweb-srag.vercel.app', 'http://localhost:3000')
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
   next()
@@ -119,8 +119,8 @@ app.get('/Maps', (req, res) => {
 
   AllMap()
   .then(status => {
-    if(status.code === 201){
-      res.status(201).json({ message: status.message, data: status.data})
+    if(status.code === 200){
+      res.status(200).json({ message: status.message, data: status.data})
     } else {
       res.status(401).json({ error: status.code, message: status.message })
     }
