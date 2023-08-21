@@ -1,5 +1,4 @@
 const express = require('express')
-const run = require('./src/bd/queryteste.js')
 const Query1 = require('./src/queries/query1.js')
 const Query2 = require('./src/queries/query2.js')
 const Query3 = require('./src/queries/query3.js')
@@ -14,6 +13,8 @@ const Query10 = require('./src/queries/query10.js')
 const {login} = require('./src/Authentication/authLogic.js')
 const {register} = require('./src/Authentication/authLogic.js')
 const {logout} = require('./src/Authentication/authLogic.js')
+const getMap = require('./src/bd/Map/saveMap.js')
+const AllMap = require('./src/bd/Map/AllMaps.js')
 
 
 const app = express()
@@ -23,8 +24,8 @@ const port = 3001
 app.use(express.json())
 
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'https://portalweb-srag.vercel.app')
-  // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
+  //res.setHeader('Access-Control-Allow-Origin', 'https://portalweb-srag.vercel.app')
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
   next()
@@ -143,6 +144,32 @@ app.post('/logout', async (req, res) => {
     }
   })
   
+})
+
+app.post('/Map', (req, res) => {
+  const {latitude, longitude} = req.body
+  console.log(latitude, longitude)
+  getMap(latitude, longitude)
+
+  .then(status => {
+    if(status.code === 201){
+      res.status(201).json({ message: status.message})
+    } else {
+      res.status(401).json({ error: status.code, message: status.message })
+    }
+  })
+})
+
+app.get('/Maps', (req, res) => {
+
+  AllMap()
+  .then(status => {
+    if(status.code === 201){
+      res.status(200).json({ message: status.message, data: status.data})
+    } else {
+      res.status(401).json({ error: status.code, message: status.message })
+    }
+  })
 })
 
 // Inicia o servidor

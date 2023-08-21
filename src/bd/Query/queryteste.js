@@ -1,4 +1,4 @@
-const client = require('../client')
+/*const client = require('../../client')
 
 // FILTROS DA PRIMEIRA CONSULTA.
 
@@ -32,3 +32,4 @@ async function run() {
 }
 
 module.exports = run
+*/
