@@ -1,6 +1,5 @@
 const express = require('express')
 const bodyParser = require('body-parser');
-const run = require('./src/bd/queryteste.js')
 const Query1 = require('./src/queries/query1.js')
 const Query2 = require('./src/queries/query2.js')
 const Query3 = require('./src/queries/query3.js')
@@ -12,9 +11,6 @@ const Query8 = require('./src/queries/query8.js')
 const Query9 = require('./src/queries/query9.js')
 const Query10 = require('./src/queries/query10.js')
 
-const {login} = require('./src/Authentication/authLogic.js')
-const {register} = require('./src/Authentication/authLogic.js')
-const {logout} = require('./src/Authentication/authLogic.js')
 const getMap = require('./src/bd/Map/saveMap.js')
 const AllMap = require('./src/bd/Map/AllMaps.js')
 
@@ -23,7 +19,6 @@ const app = express()
 const port = 3001
 
 // Middleware para análise do corpo da solicitação no formato JSON
-app.use(bodyParser.json())
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', 'https://portalweb-srag.vercel.app')
@@ -33,6 +28,7 @@ app.use((req, res, next) => {
   next()
 })
 
+app.use(bodyParser.json()) 
 // Rota para obter todos os livros
 app.get('/Query1', (req, res) => {
     Query1()
@@ -104,55 +100,6 @@ app.get('/Query10', (req, res) => {
   )
 })
 
-app.post('/login', async (req, res) => {
-  const { email, password } = req.body
-  
-  login(email, password)
-  .then(status => {
-    if(status.code === 200){
-      res.status(200).json({ message: 'Usuário autenticado com sucesso!', token: status.token.toJSON() })
-    } 
-    else {
-      res.status(401).json({ error: 'Credenciais inválidas. Não foi possível autenticar o usuário.' })
-    }
-  })
-  
-})
-
-app.post('/register', async (req, res) => {
-  const { email, password } = req.body
-  
-  register(email, password)
-  .then(status => {
-    if(status.code === 201){
-      res.status(201).json({ message: 'Usuário registrado com sucesso!'})
-    } 
-    else {
-      res.status(400).json({ error: 'Não foi possível registrar o usuário. Verifique os dados fornecidos.' })
-    }
-  })
-  
-})
-
-app.post('/logout', async (req, res) => {
-  const {token} = req.body
-  
-  logout(token)
-  .then(status => {
-    if(status.code === 200){
-      res.status(200).json({ message: 'Usuário deslogado com sucesso!' })
-    } else {
-      res.status(400).json({ error: 'Não foi possível deslogar o usuário.' })
-    }
-  })
-  
-})
-
-// Inicia o servidor
-app.listen(port, () => {
-  console.log(`Servidor rodando em http://localhost:${port}`)
-})
-
 app.post('/Map', (req, res) => {
   const {latitude, longitude} = req.body
   console.log(latitude, longitude)
@@ -179,3 +126,7 @@ app.get('/Maps', (req, res) => {
   })
 })
 
+// Inicia o servidor
+app.listen(port, () => {
+  console.log(`Servidor rodando em http://localhost:${port}`)
+})
